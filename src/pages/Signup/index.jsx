@@ -8,17 +8,7 @@ const Signup = () => {
   const [confirmPassword, setConfirmPassword] = useState("")
   const [error, setError] = useState("")
 
-  // const request = async () => {
-      
-  //   const response = await axios({
-  //     method: 'POST',
-  //     url: 'https://localhost:4002/users',
-  //     data: JSON.stringify(form)
-  //   })
-
-  //   console.log(response.data)
-  // }
-  const [firstRender, setFirstRender] = true
+  const [firstRender, setFirstRender] = useState(true)
 
   useEffect(() => {
     if (firstRender) {
@@ -27,12 +17,10 @@ const Signup = () => {
       
       axios({
         method: 'POST',
-        url: 'https://localhost:4002/users',
-        data: JSON.stringify(form)
+        url: 'http://localhost:4002/users',
+        data: form
       })
     }
-    
-
   }, [form])
 
   const handleSubmit = (e) => {
@@ -44,17 +32,36 @@ const Signup = () => {
           email,
           password
         })
+        setEmail('')
+        setPassword('')
+        setConfirmPassword('')
     }
   }
 
   return (
     <form onSubmit={handleSubmit}>
-      <label for="email">Email</label>
-      <input type="text" name="email" id="email"/>
-      <label for="password">Password</label>
-      <input type="text" name="password" id="password"/>
-      <label for="confirm-password">Confirm Password</label>
-      <input type="text" name="confirm-password" id="confirm-password"/>
+      <label htmlFor="email">Email</label>
+      <input 
+        type="text" 
+        name="email" 
+        id="email" 
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+      <label htmlFor="password">Password</label>
+      <input 
+        type="text" 
+        name="password" 
+        id="password" 
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
+      <label htmlFor="confirm-password">Confirm Password</label>
+      <input 
+        type="text" name="confirm-password" id="confirm-password" 
+        value={confirmPassword}
+        onChange={(e) => setConfirmPassword(e.target.value)}
+      />
       {error && <p>{error}</p>}
       <button type="submit">Submit</button>
     </form>
